@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -34,6 +35,7 @@ export function Header() {
           onHome ? "mix-blend-difference" : "border-b border-line bg-void/70 backdrop-blur-xl backdrop-saturate-50"
         }`}
       >
+        {/* sekcja nad menu z zegarem i informacja o kolekcji i dropie */}
         <div className="wrap micro flex items-center justify-between gap-4 border-b border-ink/15 py-3">
           <div className="flex items-center gap-2">
             <span className="live-dot" aria-hidden="true" />
@@ -43,6 +45,7 @@ export function Header() {
             Signal · {site.collection} / {site.drop}
           </span>
         </div>
+        {/* menu desktop i koszyk */}
         <nav aria-label="Główna" className="wrap flex items-center justify-between gap-6 py-3">
           <Link href="/" aria-label="Starly — strona główna" className="flex min-h-11 items-center">
             <Image src="/images/logo-white.png" alt="Starly" width={1340} height={590} className="h-8 w-auto" priority />
@@ -59,10 +62,12 @@ export function Header() {
               </Link>
             ))}
           </div>
+          {/* koszyk i przycisk menu mobilnego */}
           <div className="label flex items-center gap-6">
             <button type="button" className="ul min-h-11 cursor-pointer" onClick={() => setCartOpen(true)}>
               Koszyk[ {count} ]
             </button>
+            
             <button
               type="button"
               className="min-h-11 cursor-pointer md:hidden"
@@ -75,7 +80,7 @@ export function Header() {
           </div>
         </nav>
       </header>
-
+      {/* menu mobilne */}
       {menuOpen && (
         <div
           id="menu-mobile"

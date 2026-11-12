@@ -1,6 +1,6 @@
 # Starly — After Dark FW26
 
-Sklep-landing dla marki odzieżowej w mrocznym, edytorskim stylu: ziarno filmowe, rozmycie, wysoki kontrast i paralaksa przy przewijaniu. Projekt portfolio: frontend z animacjami + prawdziwy backend na PostgreSQL.
+Sklep-landing dla marki odzieżowej w mrocznym, edytorskim stylu: ziarno filmowe, rozmycie, wysoki kontrast i paralaksa przy przewijaniu. Projekt portfolio: frontend z animacjami + backend na PostgreSQL.
 
 ## Stack
 
@@ -78,11 +78,6 @@ src/
 
 Każdy element z atrybutem `data-speed` dostaje paralaksę (`ScrollEffects.tsx`): wartość dodatnia przesuwa się wolniej niż scroll, ujemna szybciej. `data-reveal` odsłania zdjęcie od dołu, `data-words` wyostrza słowa z rozmycia.
 
-## Deploy (Vercel)
-
-1. Załóż bazę w chmurze (np. Neon lub Supabase, darmowy plan) i ustaw `DATABASE_URL` w Vercel → Settings → Environment Variables.
-2. Uruchom `npx prisma migrate deploy` i `npm run db:seed` na tej bazie.
-3. Zaimportuj repozytorium w Vercel. Opcjonalnie ustaw `NEXT_PUBLIC_SITE_URL` (dla linków Open Graph).
 
 ## Do zrobienia
 

@@ -1,3 +1,4 @@
+//Dane poczatkowe do bazy danych.
 import "dotenv/config";
 import { PrismaClient, Category } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -6,7 +7,7 @@ const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
 });
 
-// Ceny i stany magazynowe są przykładowe — podmień na prawdziwe.
+// Ceny i stany magazynowe są przykładowe
 const products = [
   {
     slug: "bluza-oversize",
@@ -69,7 +70,8 @@ const products = [
     ],
   },
 ];
-
+// i - indeks produktu w tablicy products (sluzy jako kolejnosc w katalogu)
+// p - obiekt produktu z tablicy products
 async function main() {
   for (const [i, p] of products.entries()) {
     const { images, variants, ...data } = p;

@@ -1,23 +1,31 @@
+//Schemat bazy danych
+
+
 generator client {
   provider   = "prisma-client-js"
   engineType = "client"
 }
 
+//Info o bazie
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+
+//Kategorie produktow
 enum Category {
   TOP
   BOTTOM
   ACCESSORY
 }
 
+// Z kad newsletter zostal zasubowany
 enum SubscriberSource {
   NEWSLETTER
   DROP
 }
+
 
 enum OrderStatus {
   PENDING
@@ -25,13 +33,14 @@ enum OrderStatus {
   CANCELLED
 }
 
+
 model Product {
   id          String         @id @default(cuid())
   slug        String         @unique
   name        String
   description String
   composition String?
-  /// Cena w groszach (2 490,00 PLN = 249000)
+  /// Cena w groszach (10,00 PLN = 1000)
   price       Int
   category    Category
   isNew       Boolean        @default(false)
@@ -41,8 +50,10 @@ model Product {
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 
+  //przyspiesza filtrowanie w katalogu po kategorii
   @@index([category])
 }
+
 
 model ProductImage {
   id        String  @id @default(cuid())
@@ -55,6 +66,7 @@ model ProductImage {
   @@index([productId, position])
 }
 
+//wariant danego produktu to jego dodajemy do koszyka
 model Variant {
   id         String      @id @default(cuid())
   productId  String

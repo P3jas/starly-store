@@ -5,4 +5,5 @@ export function formatPrice(grosze: number) {
   return `${number.format(grosze / 100)} PLN`;
 }
 
+//dodaje zero na początek liczby jeśli jest mniejsza niż 10
 export const pad2 = (n: number) => String(n).padStart(2, "0");
