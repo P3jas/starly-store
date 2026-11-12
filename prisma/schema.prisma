@@ -1,0 +1,100 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  TOP
+  BOTTOM
+  ACCESSORY
+}
+
+enum SubscriberSource {
+  NEWSLETTER
+  DROP
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Product {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  name        String
+  description String
+  composition String?
+  /// Cena w groszach (2 490,00 PLN = 249000)
+  price       Int
+  category    Category
+  isNew       Boolean        @default(false)
+  sortOrder   Int            @default(0)
+  images      ProductImage[]
+  variants    Variant[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([category])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String
+  position  Int     @default(0)
+
+  @@index([productId, position])
+}
+
+model Variant {
+  id         String      @id @default(cuid())
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size       String
+  stock      Int         @default(0)
+  sortOrder  Int         @default(0)
+  orderItems OrderItem[]
+
+  @@unique([productId, size])
+}
+
+model Subscriber {
+  id        String           @id @default(cuid())
+  email     String
+  source    SubscriberSource
+  createdAt DateTime         @default(now())
+
+  @@unique([email, source])
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  email     String
+  name      String
+  /// Suma w groszach
+  total     Int
+  status    OrderStatus @default(PENDING)
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId   String
+  variant     Variant @relation(fields: [variantId], references: [id])
+  productName String
+  size        String
+  unitPrice   Int
+  quantity    Int
+}
