@@ -1,6 +1,6 @@
 //Dane poczatkowe do bazy danych.
 import "dotenv/config";
-import { PrismaClient, Category } from "@prisma/client";
+import { PrismaClient, Category } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const prisma = new PrismaClient({
